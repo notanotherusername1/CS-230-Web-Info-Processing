@@ -1,0 +1,381 @@
+/* HTML */
+
+<h2>CS230 Lab 2 </h2>
+<h4>Assignment tasks:</h4>
+<li>Created a table with HTML and styled it with CSS, also created a function to carry out various tasks. The table allows the user to input the scores for each assignment. When the button "Calculate Final Grades" is clicked, the final grade average is displayed
+  for each student (only scores between 0 to 100 are calculated for the Final Grade Average) and if that score is under 40 than it gets a red colour, assignments not yet submitted get a yellow background colour.</li>
+<li>Under the table the total number of assignments not submitted yet is displayed. The cells that did not get a score should change to "unsubmitted". Right below a CSV format of the table content is created when CSV button is clicked.</li>
+
+
+<table id="table1" style="width:100%">
+
+  <tbody>
+    <tr>
+      <th>Name</th>
+      <th>ID Number</th>
+      <th>Assignment 1</th>
+      <th>Final Grade Average</th>
+    </tr>
+  </tbody>
+
+
+  <tr>
+    <td class="left" contenteditable="true">Jill</td>
+    <td class="left" contenteditable="true">13453454</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+
+</table>
+<div>
+  <button id="calcAvg" onclick="calcAvg()" class="buttonUp">Calculate Final Grades</button>
+
+</div>
+
+<div>
+  <button id="addRow" onclick="addRow()" class="buttonUp">New Row</button>
+</div>
+
+<div>
+  <button id="addColumn" onclick="addColumn()" class="buttonUp">New Column</button>
+</div>
+
+<div>
+  <button id="saveCookie" onclick="cookiejar()" class="buttonUp">Cookie Jar</button>
+</div>
+
+<div>
+  <button id="LoadTable()" onclick="LoadTable()" class="buttonUp">Back to Previous Structure</button>
+</div>
+
+<div>
+  <button id="CSV" onclick="displayCSV()" class="button1">CSV</button>
+</div>
+
+<div>
+  <span id="notSubmit"></span><br>
+</div>
+
+<div>
+  <textarea rows="15" cols="60" id="csvTable"></textarea>
+</div>
+
+
+/* Javascript */
+//Calculates the average, and change the colors appropriately
+function calcAvg() {
+  var table = document.getElementById("table1");
+  var rows = table.rows;
+  var notSubmitted = 0;
+
+  //start calculation from row position 1 -that is where the values are
+  for (var y = 1; y < rows.length; y++) {
+    console.log("called FORloop ONE!!**");
+    var cells = rows[y].cells;
+    var totalNum = 0;
+    var sumVal = 0;
+    //start calculation from cell position 2
+    for (var x = 2; x < table.rows[y].cells.length - 1; x++) {
+      var cell = cells[x];
+      console.log(cell);
+      var keyboardIn = parseInt(cell.innerHTML);
+      console.log("keyboradIn value: " + keyboardIn);
+      //if the input is between 0 -100, and is not empty or invalid
+      if (!isNaN(keyboardIn) && keyboardIn != '-' && keyboardIn >= 0 && keyboardIn <= 100) {
+        console.log("£%$^^£entered IF STATEMENT&%**$^");
+        rows[y].cells[x].style.backgroundColor = "white";
+        sumVal += keyboardIn;
+        console.log("sumVal!!**" + sumVal);
+        totalNum++;
+      } else {
+        rows[y].cells[x].style.backgroundColor = "yellow";
+        notSubmitted++;
+      }
+    }
+    var avg = sumVal / totalNum;
+    console.log("avg!!**" + avg);
+    rows[y].cells[cells.length - 1].innerHTML = "<td>" + Math.round(avg) + "%" + "</td>";
+    if (avg < 40) {
+      rows[y].cells[cells.length - 1].style.color = "white";
+      rows[y].cells[cells.length - 1].style.backgroundColor = "red";
+    }
+  }
+  document.getElementById("notSubmit").innerHTML = "Total number of assignments that have not yet been submitted = " + notSubmitted;
+  document.getElementById("notSubmit").style.color = "black";
+}
+//The function below displays the CSV
+function displayCSV() {
+  var clearCSV = "";
+  document.getElementById("csvTable").value = clearCSV;
+  var csv = "";
+  var table = document.getElementById("table1");
+  var rows = table.rows;
+  //start from row 1 -that is where the values are
+  for (var y = 1; y < rows.length; y++) {
+    var cells = rows[y].cells;
+    csv = cells[0].innerHTML + "," + cells[1].innerHTML;
+    console.log(csv);
+    for (var x = 2; x < 7; x++) {
+      var cell = cells[x];
+      csv = csv + "," + cell.innerHTML;
+    }
+    csv = csv + "\n";
+    console.log("THREE$$$$$$$$$$$$Aerheahearhre CSV  " + csv);
+    document.getElementById("csvTable").value += csv;
+  }
+}
+
+function addRow() {
+  console.log("ADD ROW called");
+
+  var table = document.getElementById("table1");
+  var y = table.rows.length;
+  var rows = table.insertRow(y);
+  var cellLength = table.rows[0].cells.length;
+  for (var x = 0; x < cellLength; x++) {
+    var cells = rows.insertCell(x);
+    if (x < cellLength - 1) {
+      cells.innerHTML = "-";
+      cells.contentEditable = "true";
+    }
+  }
+}
+
+function addColumn() {
+  var table = document.getElementById('table1');
+  var newCol = "";
+  for (var i = 0; i < table.rows.length; i++) {
+    if (i == 0) {
+      newCol = table.rows[i].insertCell(table.rows[i].cells.length - 1);
+      newCol.innerHTML = "Assignment";
+      newCol.style.backgroundColor = "rgb(255, 99, 71)";
+      newCol.style.font = "sans-serif";
+      newCol.style.fontWeight = "bold";
+      newCol.style.textAlign = "center";
+    } else {
+      newCol = table.rows[i].insertCell(table.rows[i].cells.length - 1);
+      newCol.innerHTML = "-";
+      newCol.setAttribute('contentEditable', 'true');
+    }
+  }
+}
+
+
+function cookiejar() {
+  console.log("cookieJarMethod called");
+  var table = document.getElementById("table1");
+  console.log(table.rows);
+  var tinCookieJar = '';
+  var numRows = (table.rows.length);
+  var columnLength = table.rows[0].cells.length;
+  console.log("numRows value: " + numRows);
+  console.log("columnLength value: " + columnLength);
+  document.cookie = "cookieRowL=" + numRows;
+  document.cookie = "cookieColumnL=" + columnLength;
+  alert("Cookie Saved" + "\n Number of Rows: " + numRows + "\n Number of Columns: " + columnLength);
+  //To save the content inside the table
+  for (var i = 0; i < table.rows.length; i++) {
+    for (var j = 0; j < table.rows[0].cells.length; j++) {
+      tinCookieJar += table.rows[i].cells[j].innerHTML + ",";
+    }
+  }
+  //tinCookieJar = tinCookieJar +"\n";
+  document.cookie = "contentOfCookieJar=" + tinCookieJar;
+}
+
+function LoadTable() {
+  var contentOfCookieJar = getCookie("contentOfCookieJar").split(",");
+  //alert("The table says:" + contentOfCookieJar);
+  var cookieRowL = getCookie("cookieRowL");
+  //alert("cookieRowL:" + cookieRowL);
+  var cookieColumnL = getCookie("cookieColumnL");
+  alert("The table says: " + contentOfCookieJar + "\n cookieColumnL: " + cookieColumnL + "\n cookieRowL: " + cookieRowL);
+  var table = document.getElementById("table1");
+  var y = table.rows.length;
+  var columnLengthOldTable = table.rows[0].cells.length;
+
+  //while (y > cookieRowL || y < cookieRowL) {
+/*   var deleteRowDiffrence = y - cookieRowL;
+  
+  if (y > cookieRowL) {
+    for (var loop = 0; loop < deleteRowDiffrence; loop++) {
+      table.deleteRow(y - 1);
+    }
+  
+  } else {
+    for (var loop2 = 0; loop2 < deleteRowDiffrence; loop2++){
+      table.inserRow(y - 1);
+    }
+    
+  }
+  
+  var deleteCellDiffrence = columnLengthOldTable - cookieColumnL;
+  
+  if (columnLengthOldTable > cookieColumnL) {
+    for (var loop1 = 0; loop1 < deleteCellDiffrence; loop1++) {
+       table.deleteCell(columnLengthOldTable - 1);
+    }
+  
+  } else {
+    for (var loop3 = 0; loop3 < deleteCellDiffrence; loop3++){
+      table.insertCell(columnLengthOldTable - 1);
+    }
+    
+  } */
+  
+/*  while(y>cookieRowL || y<cookieRowL){
+    if(y>cookieRowL){
+      table.deleteRow(y-1);
+    }else{
+      table.inserRow(y-1);
+    }
+   }
+  
+   
+ while(columnLengthOldTable > cookieColumnL || columnLengthOldTable < cookieColumnL){
+      if (columnLengthOldTable > cookieColumnL) {
+        table.deleteCell(columnLengthOldTable - 1);
+        console.log(table.deleteCell(columnLengthOldTable - 1));
+      } else {
+        table.insertCell(columnLengthOldTable - 1);
+      }
+   }
+ 
+ while (columnLengthOldTable > cookieColumnL || columnLengthOldTable < cookieColumnL) {
+    var deleteCellDiffrence = y - cookieRowL;
+    for (var loop1 = 0; loop1 < deleteCellDiffrence; loop1++) {
+      if (columnLengthOldTable > cookieColumnL) {
+        table.deleteCell(columnLengthOldTable - 1);
+      } else {
+        table.insertCell(columnLengthOldTable - 1);
+      }
+    }
+  }
+  
+  if (cookieRowL.length > 0) {
+    // delete the entire table to generate a new one
+    while (table.rows.length > 0) {
+      table.deleteRow(0);
+    }
+  } */
+if (contentOfCookieJar.length > 0) {
+      // delete the entire table to generate a new one
+      while (table.rows.length > 0) {
+        table.deleteRow(0);
+      }
+    }
+    alert(contentOfCookieJar);
+
+  for (var i = 0; i < cookieRowL; i++) {
+    var row = document.createElement("tr");
+    for (var j = 0; j < cookieColumnL; j++) {
+      var content = contentOfCookieJar[i * cookieColumnL + j];
+      if (i == 0) { // header
+        var th = document.createElement("th");
+        th.innerText = content;
+        row.appendChild(th);
+      } else { // body
+        var cell = row.insertCell(j);
+        if (j > 1 && j < cookieColumnL) {
+          // last column is the final grade, so we concatenate '%'
+          if (j == cookieColumnL - 1) {
+            content += "%";
+          } else {
+            // other columns begin from 2 is assignment grade, so we allow users to update grades
+            cell.setAttribute("td", "onCellUpdating(this, event)");
+          }
+          // all columns begin from 2 should be right-aligned
+          cell.classList.add("right");
+        }
+        cell.innerText = content;
+       // cell.setAttribute("contenteditable", "true");
+      }
+    }
+    table.getElementsByTagName("tbody")[0].appendChild(row);
+  }
+  // turn on the automatical variable
+  //onAutomatically = true;
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+
+
+/* CSS */
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 10px auto;
+}
+
+body {
+  background-color: rgb(255, 255, 255);
+  font-family: sans-serif;
+}
+
+p {
+  color: black;
+  font-family: sans-serif;
+}
+
+th {
+  text-align: center;
+  background-color: rgb(255, 99, 71);
+}
+
+td {
+  text-align: right;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+;
+.wrapper {
+  text-align: center;
+  margin: 10px auto;
+}
+
+.buttonUp {
+  background-color: #f14e4e;
+  color: #6b1c77;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  position: center;
+  margin: 10px auto;
+}
+
+.button1 {
+  background-color: red;
+  color: #6b1c77;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  position: center;
+  margin: 10px auto;
+}

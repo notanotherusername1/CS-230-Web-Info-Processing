@@ -1,0 +1,243 @@
+/* HTML */
+
+<h2>CS230 Lab 1 </h2>
+<h4>Assignment tasks:</h4>
+<li>Created a table with HTML and styled it with CSS, also created a function to carry out various tasks. The table allows the user to input the scores for each assignment. When the button "Calculate Final Grades" is clicked, the final grade average is displayed for each student and if that score is under 40 than it gets a red colour, assignments not yet submitted get a yellow background colour.</li>
+<li>Under the table the total number of assignments not submitted yet is displayed. The cells that did not get a score should change to "unsubmitted". Right below a CSV format of the table content is created.</li>
+
+
+<table id= "table1" style="width:100%">
+
+
+  <tr>
+    <th>Name</th>
+    <th>ID Number</th> 
+    <th>Assignment 1</th>
+    <th>Assignment 2</th>
+    <th>Assignment 3</th>
+    <th>Assignment 4</th>
+    <th>Assignment 5</th>
+    <th>Final Grade Average</th>
+  </tr>
+  
+  
+  <tr >
+    <td class= "left">Jill</td>
+    <td class= "left">1</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class= "left">Eve</td>
+    <td class= "left">2</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class= "left">John</td>
+    <td class= "left">3</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td class= "left">Derek</td>
+    <td class= "left">4</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+    <tr>
+    <td class= "left">RandomName</td>
+    <td class= "left">5</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+    <tr>
+    <td class= "left">Eve</td>
+    <td class= "left">6</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+    <tr>
+    <td class= "left">lackOfImagination</td>
+    <td class= "left">7</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+    <tr>
+    <td class= "left">myNameIsEight</td>
+    <td class= "left">8</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+    <tr>
+   <td class= "left">nameIsOla</td>
+    <td class= "left">9</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+    <tr>
+    <td class= "left">namedFinally</td>
+    <td class= "left">10</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td contenteditable="true">-</td>
+    <td></td>
+  </tr>
+</table>
+<div>
+  <button id="calcAvg" onclick="calcAvg()" class="buttonUp">Calculate Final Grades</button>
+
+</div>
+
+<div>
+  <span id="notSubmit"></span><br>
+</div>
+
+<div>
+  <textarea rows="15" cols="60" id="csvTable"></textarea>
+</div>
+
+
+
+
+/* Javascript  */
+function calcAvg(){
+  var table = document.getElementById("table1");
+  var rows = table.rows;
+  var notSubmitted = 0;
+  var csv = "";
+  //start calculation from row 1 -that is where the values are
+	for(var y = 1; y < rows.length; y++){
+  	console.log("called FORloop ONE!!**");
+  	var cells = rows[y].cells;
+  	var totalNum = 0;
+    var sumVal = 0;
+    csv = cells[0].innerHTML + "," + cells[1].innerHTML;
+    console.log(csv);
+    
+    //start calculation from cell 2
+  	for(var x = 2; x < 7; x++){
+     //console.log("called FORloop TWO!!**");
+    	var cell = cells[x];
+      console.log(cell);
+      csv = csv + "," + cell.innerHTML;
+    	var keyboardIn = parseInt(cell.innerHTML);
+      console.log("keyboradIn!!**"+ keyboardIn);
+      	if(!isNaN(keyboardIn) && keyboardIn != '-'){
+     			 console.log("£%$^^£entered IF STATEMENT&%**$^");
+           rows[y].cells[x].style.backgroundColor="white";
+           sumVal += keyboardIn;
+           console.log("sumVal!!**"+ sumVal);
+           totalNum++;
+         }
+         else{
+           rows[y].cells[x].style.backgroundColor="yellow";
+           //rows[y].cells[x].innerHTML ="unsubmitted";
+           notSubmitted ++;
+         }
+  	}
+    csv = csv + "\n";
+   	console.log("THREE$$$$$$$$$$$$Aerheahearhre CSV  "+ csv);
+    document.getElementById("csvTable").innerHTML += csv;
+		var avg = sumVal / totalNum;
+    console.log("avg!!**"+ avg);
+    rows[y].cells[7].innerHTML = "<td>" + Math.round(avg) + "%" + "</td>";
+			if(avg < 40){
+    		rows[y].cells[7].style.color="white";
+      	rows[y].cells[7].style.backgroundColor="red";
+    	}
+	}
+  document.getElementById("notSubmit").innerHTML = "Total number of assignments that have not yet been submitted = "+ notSubmitted;
+  document.getElementById("notSubmit").style.color = "black";
+}
+
+
+
+/* CSS */
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  empty-cells: show;
+}
+
+body {
+  background-color: rgb(255, 255, 255);
+  font-family: sans-serif;
+}
+
+p {
+  color: black;
+  font-family: sans-serif;
+}
+
+th {
+  text-align: center;
+  background-color: rgb(255, 99, 71);
+}
+
+td {
+  text-align: right;
+}
+
+.left {
+  text-align: left;
+  };
+
+.wrapper {
+    text-align: center;
+}
+
+.buttonUp {
+  background-color: #f14e4e;
+  color: #6b1c77;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  position: center;
+}
+
+
+
+
+
+
+

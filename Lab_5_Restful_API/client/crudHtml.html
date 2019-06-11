@@ -1,0 +1,88 @@
+<!-- REFERRENCES
+https://stackoverflow.com/questions/52963274/how-to-update-a-record-using-put-in-ajax
+https://www.leaseweb.com/labs/2015/10/creating-a-simple-rest-api-in-php/
+https://www.phpflow.com/php/create-php-restful-api-without-rest-framework-dependency/
+https://www.techiediaries.com/php-rest-api/
+https://www.codeofaninja.com/2017/02/create-simple-rest-api-in-php.html
+https://www.airpair.com/js/jquery-ajax-post-tutorial
+https://lengstorf.com/code/get-form-values-as-json/ -->
+
+<!DOCTYPE HTML>
+<html>
+	<body>
+		<h1>Assignment 5. CRUD using PHP MySQL, JQuery, RestAPI, JSON</h1><br>
+      <h3>Create Reading List</h3>
+        <form id="create" class="form">
+			<label>Name of Item in Reading List</label>
+            <input id="name" type="text" name="name">
+            <label>URL</label>
+            <input id="url" type="text" name="url">
+            <label>Book Description</label>
+						<input id="description" type="text" name="desc">
+						<br>
+						<button id="Create" type="submit">Submit</button>
+				</form>
+				<div id="createOutput"></div>
+				<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+				<script src="crud.js" type="text/javascript"></script>
+	
+	<h3>RETRIEVE</h3>
+		<form id="retrieve">
+			<select id="select" name="selection">
+				<option value="idVal">ID</option>
+				<option value="nameVal">Name</option>
+			</select>
+		  <input placeholder="Write what to retrieve" id="retrieveMe" type="text">
+		  <br>
+		  <button id="Find" type="submit" name="find">Find</button>
+		</form>
+		<div id="retrieveOutput">
+		</div>
+		<br><br></br>
+
+		<h3>DELETE</h3>
+		<form id="deleteForm">
+			<input id="deleteMeInput" type="text" name="deleteName" placeholder="Id to Delete">
+		</br>
+		  <button id="Delete" type="submit" name="del">Delete</button>
+		</form>
+		<div id="deleteOutput"></div>
+		<br><br>
+
+		<h3>UPDATE Description</h3>
+		<form id="updateForm">
+			Enter ID for description to be updated:
+			<input id="updateID" type="text" name="updateID" placeholder="What ID to Update"></br>
+			New value to set in description:
+			<input id="updateMeInput" type="text" name="updateName" placeholder="Change description to...">
+			<br></br>
+		  <button id="Update" type="submit" name="del">Update</button>
+		</form>
+		<div id="UpdateOutput"></div>
+		<br><br>
+
+		<h3>UPDATE Name</h3>
+		<form id="updateForm2">
+			Enter ID for Name to be updated:
+			<input id="updateID2" type="text" name="updateID2" placeholder="What Name to Update"></br>
+			New value to set in Name:
+			<input id="updateMeInput2" type="text" name="updateName2" placeholder="Change Name to...">
+			<br></br>
+		  <button id="Update2" type="submit" name="del2">Update</button>
+		</form>
+		<div id="UpdateOutput2"></div>
+		<br><br>
+
+		<h3>UPDATE URL</h3>
+		<form id="updateForm3">
+			Enter ID for URL to be updated:
+			<input id="updateID3" type="text" name="updateID3" placeholder="What URL to Update"></br>
+			New value to set in URL:
+			<input id="updateMeInput3" type="text" name="updateName3" placeholder="Change URL to...">
+			<br></br>
+		  <button id="Update3" type="submit" name="del3">Update</button>
+		</form>
+		<div id="UpdateOutput3"></div>
+		<br><br>
+	</body>
+	</html>
